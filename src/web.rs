@@ -1,12 +1,12 @@
 use crate::config::Config;
 use anyhow::{Context as _, Result};
-use axum::{Json, Router, extract::ConnectInfo, routing::get};
+use axum::{Json, Router, extract::ConnectInfo, http::HeaderMap, routing::get};
 use serde::Serialize;
 use std::net::SocketAddr;
 use tokio::net::TcpListener;
 
 pub(crate) async fn start(config: Config) -> Result<()> {
-    let app = Router::new().route("/", get(ip));
+    let app = Router::new().route("/", get(ip)).route("/dbg", get(dbg));
 
     let listener = TcpListener::bind(("127.0.0.1", config.port))
         .await
@@ -35,4 +35,8 @@ async fn ip(ConnectInfo(addr): ConnectInfo<SocketAddr>) -> Json<IpResponse> {
     Json(IpResponse {
         ip: addr.ip().to_string(),
     })
+}
+
+async fn dbg(headers: HeaderMap) -> String {
+    format!("Headers:\n\n{headers:?}")
 }
