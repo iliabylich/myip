@@ -1,4 +1,5 @@
 mod config;
+mod ip2loc;
 mod web;
 
 use anyhow::Result;
