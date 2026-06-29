@@ -15,9 +15,11 @@ tokio = { version = "1", default-features = false, features = [
     "macros",
     "rt",
     "net",
-    "fs",
 ] }
-toml = "1.1"
+toml = { version = "1.1", default-features = false, features = [
+    "parse",
+    "serde",
+] }
 reqwest = { version = "0.13", default-features = false, features = [
     "json",
     "rustls",

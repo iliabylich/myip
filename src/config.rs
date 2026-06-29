@@ -13,9 +13,8 @@ const PATH: &str = "config.toml";
 const PATH: &str = "/etc/myip/config.toml";
 
 impl Config {
-    pub(crate) async fn read() -> Result<Self> {
-        let contents = tokio::fs::read_to_string(PATH)
-            .await
+    pub(crate) fn read() -> Result<Self> {
+        let contents = std::fs::read_to_string(PATH)
             .with_context(|| format!("failed to read config from {PATH}"))?;
 
         let config: Self = toml::from_str(&contents)

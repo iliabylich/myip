@@ -7,7 +7,7 @@ use config::Config;
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<()> {
-    let config = Config::read().await?;
+    let config = Config::read()?;
     web::start(config).await?;
 
     Ok(())
